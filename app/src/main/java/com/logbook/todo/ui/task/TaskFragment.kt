@@ -194,7 +194,7 @@ class TaskFragment : Fragment(), FontSizeAware {
 
             binding.chipGroupTags.forEach { chip ->
                 if (chip is Chip) {
-                    chip.textSize = fontSize // Set desired font size (e.g., 14sp)
+                    chip.textSize = fontSize // Set desired font size
                 }
             }
 

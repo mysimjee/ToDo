@@ -14,12 +14,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.Manifest
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
+import android.widget.TextView
 
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.logbook.todo.databinding.ActivityMainBinding
 import com.logbook.todo.ui.FontSizeAware
 
@@ -136,12 +141,36 @@ class MainActivity : AppCompatActivity() {
             } else {
                 aboutMenuItem.isVisible = true // Show About menu item otherwise
             }
+            applyFontSizeToMenu(menu) // Apply font size to menu options
 
             return super.onPrepareOptionsMenu(menu)
         } catch (e: Exception) {
             e.printStackTrace() // Log the exception
             Toast.makeText(this, "Error preparing menu: ${e.message}", Toast.LENGTH_SHORT).show()
             return false
+        }
+    }
+
+    private fun applyFontSizeToMenu(menu: Menu?) {
+        menu?.let {
+            for (i in 0 until it.size()) {
+                val menuItem = it.getItem(i)
+                val spannableTitle = SpannableString(menuItem.title)
+                val fontSize = when (selectedFontSizeIndex) {
+                    0 -> resources.getDimension(R.dimen.font_size_small) // Small
+                    1 -> resources.getDimension(R.dimen.font_size_medium) // Medium
+                    2 -> resources.getDimension(R.dimen.font_size_large) // Large
+                    else -> resources.getDimension(R.dimen.font_size_medium) // Default
+                }
+
+                spannableTitle.setSpan(
+                    AbsoluteSizeSpan(fontSize.toInt(), true), // `true` converts to sp units
+                    0,
+                    spannableTitle.length,
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                )
+                menuItem.title = spannableTitle
+            }
         }
     }
 
@@ -275,6 +304,18 @@ class MainActivity : AppCompatActivity() {
                 1 -> resources.getDimension(R.dimen.font_size_medium) // Medium
                 2 -> resources.getDimension(R.dimen.font_size_large) // Large
                 else -> resources.getDimension(R.dimen.font_size_medium) // Default
+            }
+
+
+
+            // Apply font size to the toolbar title
+            val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+            for (i in 0 until toolbar.childCount) {
+                val view = toolbar.getChildAt(i)
+                if (view is TextView) {
+                    view.textSize = fontSize // Set the font size to the toolbar title
+                    break
+                }
             }
 
             // Get the NavHostFragment and its child fragments

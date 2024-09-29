@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -116,6 +117,17 @@ class TaskListAdapter(
             binding.textViewCompletionDate.textSize = size
             binding.textViewPriority.textSize = size
             binding.checkBoxTaskCompletionStatus.textSize = size
+
+            binding.buttonEdit.textSize = size
+            binding.buttonDelete.textSize = size
+
+            binding.textViewSubTask.textSize = size
+            binding.listViewSubtasks.setOnItemClickListener { parent, view, position, id ->
+                (view as? TextView)?.apply {
+                    textSize = size // Set desired font size
+                }
+            }
+
 
             // Set font size for each Chip in the ChipGroup
             for (i in 0 until binding.taskChipGroupTags.childCount) {
