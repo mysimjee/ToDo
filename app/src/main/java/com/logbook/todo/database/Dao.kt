@@ -34,9 +34,6 @@ interface TaskDao {
     @Query("SELECT * FROM subtasks WHERE taskId = :taskId")
     suspend fun getSubTasksForTask(taskId: Long): List<SubTask>
 
-    @Transaction
-    @Query("SELECT * FROM tasks ORDER BY completionDate IS NULL, completionDate ASC")
-    suspend fun getTasksWithSubTasks(): List<TaskWithSubTasks>
 
 
     @Transaction
