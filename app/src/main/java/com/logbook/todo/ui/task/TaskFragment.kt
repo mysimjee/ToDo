@@ -22,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
@@ -191,6 +192,13 @@ class TaskFragment : Fragment(), FontSizeAware {
             binding.buttonSelectTags.textSize = fontSize
             binding.buttonSaveTask.textSize = fontSize
 
+            binding.chipGroupTags.forEach { chip ->
+                if (chip is Chip) {
+                    chip.textSize = fontSize // Set desired font size (e.g., 14sp)
+                }
+            }
+
+            binding.chipGroupTags
             binding.checkBoxIsCompleted.textSize = fontSize
 
             subTaskAdapter.setFontSize(fontSize)
@@ -319,7 +327,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                         clearPhotoAttachment()
                     }
                 } catch (e: Exception) {
-                    // Handle the error (e.g., log it or show a Snackbar)
+                    // Handle the error (e.g., log it or show a Snack bar)
                     Snackbar.make(binding.root, getString(R.string.error_attaching_photo), Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -328,7 +336,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                 try {
                     showDateTimePickerDialog()
                 } catch (e: Exception) {
-                    // Handle the error (e.g., log it or show a Snackbar)
+                    // Handle the error (e.g., log it or show a Snack bar)
                     Snackbar.make(binding.root, getString(R.string.error_showing_date_picker), Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -345,7 +353,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                         }
                     }
                 } catch (e: Exception) {
-                    // Handle the error (e.g., log it or show a Snackbar)
+                    // Handle the error (e.g., log it or show a Snack bar)
                     Snackbar.make(binding.root, getString(R.string.failed_to_save_update_task, e.message), Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -354,7 +362,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                 try {
                     viewModel.updateTaskCompletion(isChecked)
                 } catch (e: Exception) {
-                    // Handle the error (e.g., log it or show a Snackbar)
+                    // Handle the error (e.g., log it or show a Snack bar)
                     Snackbar.make(binding.root, getString(R.string.error_updating_completion_status), Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -363,7 +371,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                 try {
                     showAddSubTaskDialog()
                 } catch (e: Exception) {
-                    // Handle the error (e.g., log it or show a Snackbar)
+                    // Handle the error (e.g., log it or show a Snack bar)
                     Snackbar.make(binding.root, getString(R.string.error_adding_subtask), Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -391,7 +399,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                     try {
                         viewModel.setPriority(1)
                     } catch (e: Exception) {
-                        // Handle the error (e.g., log it or show a Snackbar)
+                        // Handle the error (e.g., log it or show a Snack bar)
                         Snackbar.make(binding.root, getString(R.string.error_setting_priority), Snackbar.LENGTH_SHORT).show()
                     }
                 }
@@ -457,7 +465,7 @@ class TaskFragment : Fragment(), FontSizeAware {
             binding.imageViewPhoto.setImageResource(R.drawable.baseline_no_photography_24) // Reset image to default
             binding.buttonAttachPhoto.text = getString(R.string.attach_photo) // Reset button text
         } catch (e: Exception) {
-            // Handle the error (e.g., log it or show a Snackbar)
+            // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error in clearPhotoAttachment: ${e.message}", e)
             Snackbar.make(binding.root, getString(R.string.error_clearing_photo_attachment), Snackbar.LENGTH_SHORT).show()
         }
@@ -521,7 +529,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                         Toast.makeText(requireContext(), getString(R.string.subtask_name_empty), Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    // Handle the error (e.g., log it or show a Snackbar)
+                    // Handle the error (e.g., log it or show a Snack bar)
                     Log.e("TaskFragment", "Error adding subtask: ${e.message}", e)
                     Snackbar.make(binding.root, getString(R.string.error_adding_subtask), Snackbar.LENGTH_SHORT).show()
                 }
@@ -565,7 +573,7 @@ class TaskFragment : Fragment(), FontSizeAware {
             // Show the date picker dialog
             datePickerDialog.show()
         } catch (e: Exception) {
-            // Handle the error (e.g., log it or show a Snackbar)
+            // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error showing date-time picker dialog: ${e.message}", e)
             Snackbar.make(binding.root, getString(R.string.error_showing_date_time_picker_dialog), Snackbar.LENGTH_SHORT).show()
         }
@@ -582,7 +590,7 @@ class TaskFragment : Fragment(), FontSizeAware {
             priorityAdapter.setDropDownViewResource(R.layout.spinner_item)
             binding.spinnerPriority.adapter = priorityAdapter
         } catch (e: Exception) {
-            // Handle the error (e.g., log it or show a Snackbar)
+            // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error setting up priority spinner: ${e.message}", e)
             Snackbar.make(binding.root, getString(R.string.error_setting_up_priority_spinner), Snackbar.LENGTH_SHORT).show()
         }
@@ -621,7 +629,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                 .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
                 .show()
         } catch (e: Exception) {
-            // Handle the error (e.g., log it or show a Snackbar)
+            // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error showing tag selection dialog: ${e.message}", e)
             Snackbar.make(binding.root, getString(R.string.error_showing_tag_selection_dialog), Snackbar.LENGTH_SHORT).show()
         }
@@ -642,7 +650,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                 binding.chipGroupTags.addView(chip)
             }
         } catch (e: Exception) {
-            // Handle the error (e.g., log it or show a Snackbar)
+            // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error displaying selected tags: ${e.message}", e)
             Snackbar.make(binding.root, getString(R.string.error_displaying_tags), Snackbar.LENGTH_SHORT).show()
         }
@@ -662,7 +670,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                 }
                 .show()
         } catch (e: Exception) {
-            // Handle the error (e.g., log it or show a Snackbar)
+            // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error showing delete confirmation dialog: ${e.message}", e)
             Snackbar.make(binding.root, getString(R.string.error_showing_dialog), Snackbar.LENGTH_SHORT).show()
         }
