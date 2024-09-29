@@ -76,17 +76,6 @@ class TaskRepository private constructor(context: Context) {
         }
     }
 
-    // Retrieve tasks with their subtasks
-    suspend fun getTasksWithSubTasks(): List<TaskWithSubTasks>? {
-        return try {
-            withContext(Dispatchers.IO) {
-                db.taskDao().getTasksWithSubTasks()
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "Error retrieving tasks with subtasks", e)
-            null
-        }
-    }
 
 
     // Add the method to the repository

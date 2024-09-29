@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.logbook.todo.databinding.ActivityMainBinding
 import com.logbook.todo.ui.FontSizeAware
-import com.logbook.todo.ui.about.AboutFragment
+
 
 class MainActivity : AppCompatActivity() {
 
