@@ -1,0 +1,140 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">To Do</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="priority_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+        <item>Urgent</item>
+        <item>Critical</item>
+    </string-array>
+
+    <string-array name="tag_array">
+        <item>Work</item>
+        <item>Personal</item>
+        <item>Urgent</item>
+        <item>Important</item>
+        <item>Later</item>
+    </string-array>
+
+    <string name="action_dark_mode_enable">Enable Dark Mode</string>
+    <string name="action_dark_mode_disable">Disable Dark Mode</string>
+
+
+    <string name="action_font_size_change">Change Font Size</string>
+
+    <string name="subtask_name_hint">Subtask Name</string>
+    <string name="checkbox_complete">COMPLETE</string>
+
+    <string name="version">Version 1.0</string>
+    <string name="description">This app helps you manage your tasks efficiently.</string>
+    <string name="developer_name">Developed by Mohamed Yusoof Simjee</string>
+    <string name="release_date">September 2024</string>
+
+    <string name="menu_home">Tasks</string>
+    <string name="menu_add_task">Add Task</string>
+    <string name="menu_edit_task">Edit Task</string>
+    <string name="menu_setting">Settings</string>
+    <string name="menu_about">About</string>
+
+    <string name="task_name">Task Name</string>
+    <string name="completion_date">Completion Date</string>
+    <string name="priority_high">Priority: High</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="completed">COMPLETE</string>
+    <string name="no_tasks_available">No tasks available</string>
+    <string name="edit_text_task_name_hint">Task Name</string>
+    <string name="text_attachment">Attachment</string>
+    <string name="button_attach_photo">Attach Photo</string>
+    <string name="text_subtasks">Subtasks</string>
+    <string name="button_add_subtask">Add Subtask</string>
+    <string name="text_completion_date">Completion Date</string>
+    <string name="button_select_completion_date">Select Completion Date</string>
+    <string name="text_priority">Priority:</string>
+    <string name="text_tags">Tags</string>
+    <string name="button_select_tags">Select Tags</string>
+    <string name="checkbox_task_completed">TASK COMPLETE</string>
+    <string name="button_save_task">Save Task</string>
+    <string name="button_update_task">Update Task</string>
+
+    <string name="menu_change_font_size">Change Font Size</string>
+    <string name="menu_exit">Exit App</string>
+    <string name="toast_light_mode">Switched to Light Mode</string>
+    <string name="toast_dark_mode">Switched to Dark Mode</string>
+    <string name="toast_copied">Converted value copied to clipboard!</string>
+    <string name="toast_copy_failed">Failed to copy to clipboard.</string>
+    <string name="toast_font_size_failed_to_changed">Failed to copy to clipboard.</string>
+    <string name="toast_conversion_error">Failed to convert due to technical error!.</string>
+    <string name="menu_switch_to_light_mode">Disable Dark Mode</string>
+    <string name="menu_switch_to_dark_mode">Enable Dark Mode</string>
+    <string-array name="font_sizes">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+    <string name="dialog_title_select_font_size">Select Font Size</string>
+    <string name="toast_font_size_change">Font size changed to %1$s</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="default_from_field_value">1</string>
+
+    <string name="task_deleted_message">Task deleted successfully!</string>
+
+
+
+
+
+    <string name="task_completed_message">"%1$s" marked as completed!</string>
+    <string name="task_incomplete_message">"%1$s" marked as incomplete!</string>
+
+    <string name="confirm_exit_title">Exit App</string>
+    <string name="confirm_exit_message">Are you sure you want to exit the app?</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
+    <string name="toast_error_showing_dialog">An error occurred while showing the dialog.</string>
+
+    <string name="not_set" tools:ignore="PrivateResource">Not Set</string>
+    <string name="completion_date_format">Completion Date: %1$s</string>
+    <string name="delete_task_title">Delete Task</string>
+    <string name="delete_task_message">Are you sure you want to delete this task?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="priority_label">Priority: %1$s</string>
+    <string name="dialog_select_tags_title">Select Tags</string>
+    <string name="dialog_select_tags_ok">OK</string>
+    <string name="dialog_confirm_delete_subtask_yes">Yes</string>
+    <string name="dialog_confirm_delete_subtask_no">No</string>
+    <string name="task_fragment_title">Task Fragment</string>
+    <string name="add_subtask">Add Subtask</string>
+    <string name="subtask_name_empty">Subtask name cannot be empty</string>
+    <string name="task_updated_successfully">Task updated successfully</string>
+    <string name="task_saved_successfully">Task saved successfully</string>
+    <string name="failed_to_save_update_task">Failed to save/update task: %1$s</string>
+    <string name="attach_photo">Attach Photo</string>
+    <string name="clear_attachment">Clear Attachment</string>
+    <string name="select_tags">Select Tags</string>
+    <string name="delete_subtask_confirmation">Are you sure you want to delete this subtask?</string>
+    <string name="delete_subtask">Delete Subtask</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="error_setting_priority">Some Internal Error Occur!</string>
+    <string name="error_setting_up_listeners">Cannot Setup Listener</string>
+    <string name="error_adding_subtask">Cannot create sub-task due to internal error!</string>
+    <string name="error_selecting_tags">Cannot add tag due to internal error!</string>
+    <string name="error_updating_completion_status">Cannot update complete status!</string>
+    <string name="error_attaching_photo">Cannot attach photo due to error!</string>
+    <string name="error_showing_date_picker">Cannot pick date due to internal error!</string>
+    <string name="error_validating_task_fields">Cannot validate task field due to internal error!</string>
+    <string name="error_clearing_photo_attachment">Cannot clear photo due to internal error!</string>
+    <string name="error_showing_dialog">Cannot show delete dialog due to internal error!</string>
+    <string name="error_displaying_tags">Cannot display tags due to internal error!</string>
+    <string name="error_showing_tag_selection_dialog">Cannot show tag selection dialog due to internal error!</string>
+    <string name="error_setting_up_priority_spinner">Cannot set priority due to internal error!</string>
+    <string name="error_showing_date_time_picker_dialog"><![CDATA[Cannot display date & time picker due to internal error!]]></string>
+    <string name="task_deletion_failed_message">Failed to delete task due to internal error!</string>
+    <string name="lbl_sub_task">Sub-Tasks</string>
+    <string name="show_completed">SHOW COMPLETE</string>
+</resources>

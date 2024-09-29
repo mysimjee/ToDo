@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Task Name -->
+        <EditText
+            android:id="@+id/editTextTaskName"
+            android:layout_width="0dp"
+            android:autofillHints=""
+            android:minHeight="48dp"
+            android:maxWidth="488dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_text_task_name_hint"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:inputType="text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Photo Attachment -->
+        <TextView
+            android:id="@+id/textViewAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/text_attachment"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            app:layout_constraintTop_toBottomOf="@id/editTextTaskName"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewPhoto"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/baseline_add_24"
+            android:contentDescription="@string/text_attachment"
+            android:scaleType="centerInside"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/textViewAttachment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/buttonAttachPhoto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/button_attach_photo"
+            app:layout_constraintTop_toBottomOf="@id/imageViewPhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Subtasks List -->
+        <TextView
+            android:id="@+id/textViewSubtasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:text="@string/text_subtasks"
+            app:layout_constraintTop_toBottomOf="@id/buttonAttachPhoto"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSubtasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewSubtasks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/buttonAddSubTask"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_add_subtask"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewSubtasks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Completion Date -->
+
+        <TextView
+            android:id="@+id/textViewCompletionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/text_completion_date"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddSubTask"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/buttonCompletionDate"
+            android:layout_width="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_select_completion_date"
+            app:layout_constraintTop_toBottomOf="@id/textViewCompletionDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Priority Spinner -->
+
+        <TextView
+            android:id="@+id/textViewPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_priority"
+            android:minHeight="48dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            app:layout_constraintTop_toBottomOf="@id/buttonCompletionDate"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <Spinner
+            android:id="@+id/spinnerPriority"
+            android:layout_width="wrap_content"
+            android:minHeight="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.06"
+            app:layout_constraintStart_toEndOf="@id/textViewPriority"
+            app:layout_constraintTop_toBottomOf="@id/buttonCompletionDate" />
+
+
+        <!-- Tags -->
+        <TextView
+            android:id="@+id/textViewSelectedTags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_tags"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            app:layout_constraintTop_toBottomOf="@id/spinnerPriority"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupTags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewSelectedTags"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="8dp"
+            android:nestedScrollingEnabled="false"/>
+
+
+        <Button
+            android:id="@+id/buttonSelectTags"
+            android:layout_width="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_select_tags"
+            app:layout_constraintTop_toBottomOf="@id/chipGroupTags"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- Is Completed Checkbox -->
+        <CheckBox
+            android:id="@+id/checkBoxIsCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/checkbox_task_completed"
+            app:layout_constraintTop_toBottomOf="@id/buttonSelectTags"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Save Task Button -->
+        <Button
+            android:id="@+id/buttonSaveTask"
+            android:layout_width="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_save_task"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/checkBoxIsCompleted"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

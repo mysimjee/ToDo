@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <style name="Base.Theme.ToDo" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="colorPrimary">@color/brown_notebook_primary</item>
+        <item name="colorPrimaryVariant">@color/brown_notebook_primary_variant</item>
+        <item name="colorSecondary">@color/brown_notebook_secondary</item>
+        <item name="android:backdropColor">@color/brown_notebook_background</item>
+        <item name="colorSurface">@color/brown_notebook_surface</item>
+        <item name="colorOnPrimary">@color/brown_notebook_on_primary</item>
+        <item name="colorOnSecondary">@color/brown_notebook_on_secondary</item>
+        <item name="colorOnBackground">#000000</item> <!-- Text color on background -->
+        <item name="colorOnSurface">#000000</item> <!-- Text color on surfaces -->
+    </style>
+
+
+    <style name="Theme.ToDo" parent="Base.Theme.ToDo" />
+</resources>

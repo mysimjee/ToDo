@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="brown_notebook_primary">#8B4513</color> <!-- SaddleBrown -->
+    <color name="brown_notebook_primary_variant">#5B3A0B</color> <!-- Darker shade -->
+    <color name="brown_notebook_secondary">#D2B48C</color> <!-- Tan -->
+    <color name="brown_notebook_background">#FFF8E1</color> <!-- Light background for contrast -->
+    <color name="brown_notebook_surface">#FFFFFF</color> <!-- White for surfaces -->
+    <color name="brown_notebook_on_primary">#FFFFFF</color> <!-- Text color on primary -->
+    <color name="brown_notebook_on_secondary">#000000</color> <!-- Text color on secondary -->
+    <color name="button_disabled_color">#FF888888</color>
+
+    <!-- Dark theme colors -->
+    <color name="brown_notebook_primary_dark">#7B4A28</color> <!-- Darker shade of primary -->
+    <color name="brown_notebook_primary_variant_dark">#5C3A31</color> <!-- Darker shade of primary variant -->
+    <color name="brown_notebook_secondary_dark">#C19A6B</color> <!-- Darker shade of secondary -->
+    <color name="brown_notebook_background_dark">#121212</color> <!-- Dark background color -->
+    <color name="brown_notebook_surface_dark">#1E1E1E</color> <!-- Dark surface color -->
+    <color name="brown_notebook_on_primary_dark">#FFFFFF</color> <!-- Text color on primary for dark theme -->
+    <color name="brown_notebook_on_secondary_dark">#000000</color> <!-- Text color on secondary for dark theme -->
+</resources>
