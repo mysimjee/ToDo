@@ -8,6 +8,7 @@ import android.app.TimePickerDialog
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -34,6 +35,9 @@ import com.logbook.todo.databinding.FragmentTaskBinding
 import com.logbook.todo.database.entities.SubTask
 import com.logbook.todo.ui.CustomSpinnerAdapter
 import com.logbook.todo.ui.FontSizeAware
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.random.Random
@@ -85,7 +89,11 @@ class TaskFragment : Fragment(), FontSizeAware {
             // Initialize the image picker launcher
             pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
                 uri?.let {
-                    viewModel.attachPhoto(it) // Update ViewModel with the selected photo URI
+                    // Copy the image to the app's folder and get the new URI
+                    val copiedUri = copyImageToAppFolder(it)
+                    copiedUri?.let { newUri ->
+                        viewModel.attachPhoto(newUri) // Update ViewModel with the URI of the copied photo
+                    }
                 }
             }
 
@@ -108,6 +116,35 @@ class TaskFragment : Fragment(), FontSizeAware {
         }
     }
 
+    private fun copyImageToAppFolder(uri: Uri): Uri? {
+        val appFolder = File(requireContext().filesDir, "images")
+        if (!appFolder.exists()) {
+            appFolder.mkdirs() // Create the folder if it doesn't exist
+        }
+
+        val fileName = "${System.currentTimeMillis()}.jpg"
+        val destinationFile = File(appFolder, fileName)
+
+        return try {
+            // Open an InputStream from the content URI
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(destinationFile)
+
+            // Copy the data from the InputStream to the OutputStream
+            inputStream?.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            // Return the URI of the copied file
+            Uri.fromFile(destinationFile)
+
+        } catch (e: IOException) {
+            Log.e("ImageCopy", "Failed to copy image: ${e.localizedMessage}")
+            null
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -403,9 +440,20 @@ class TaskFragment : Fragment(), FontSizeAware {
 
 
 
+
+
+
     private fun clearPhotoAttachment() {
         try {
-            viewModel.clearPhotoAttachment() // Clear the photo in the ViewModel
+            // Delete the copied photo file if it exists
+            viewModel.task.value?.photoAttachment?.let { uri ->
+                deletePhotoFile(uri)
+            }
+
+            // Clear the photo in the ViewModel
+            viewModel.clearPhotoAttachment()
+
+            // Reset the UI
             binding.imageViewPhoto.setImageResource(R.drawable.baseline_no_photography_24) // Reset image to default
             binding.buttonAttachPhoto.text = getString(R.string.attach_photo) // Reset button text
         } catch (e: Exception) {
@@ -415,7 +463,22 @@ class TaskFragment : Fragment(), FontSizeAware {
         }
     }
 
-
+    private fun deletePhotoFile(uri: Uri) {
+        try {
+            val file = File(uri.path ?: "")
+            if (file.exists()) {
+                if (file.delete()) {
+                    Log.d("TaskFragment", "Photo file deleted successfully: ${file.absolutePath}")
+                } else {
+                    Log.e("TaskFragment", "Failed to delete photo file: ${file.absolutePath}")
+                }
+            } else {
+                Log.d("TaskFragment", "Photo file does not exist: ${file.absolutePath}")
+            }
+        } catch (e: Exception) {
+            Log.e("TaskFragment", "Error deleting photo file: ${e.message}", e)
+        }
+    }
 
     private fun showAddSubTaskDialog() {
         val dialogBinding = DialogAddSubtaskBinding.inflate(layoutInflater)

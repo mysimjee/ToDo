@@ -137,4 +137,5 @@
     <string name="task_deletion_failed_message">Failed to delete task due to internal error!</string>
     <string name="lbl_sub_task">Sub-Tasks</string>
     <string name="show_completed">SHOW COMPLETE</string>
+    <string name="expand_collapse_button_description">Expand Task Card</string>
 </resources>
