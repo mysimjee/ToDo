@@ -179,7 +179,6 @@ class TaskFragment : Fragment(), FontSizeAware {
             binding.editTextTaskName.textSize = fontSize
 
             // Set font size for TextViews
-            binding.textViewAttachment.textSize = fontSize
             binding.textViewSubtasks.textSize = fontSize
             binding.textViewCompletionDate.textSize = fontSize
             binding.textViewPriority.textSize = fontSize
