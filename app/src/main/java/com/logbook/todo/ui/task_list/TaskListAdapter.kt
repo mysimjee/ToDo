@@ -1,6 +1,9 @@
 package com.logbook.todo.ui.task_list
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 
@@ -251,6 +254,34 @@ class TaskListAdapter(
                 binding.buttonEdit.setOnClickListener {
                     onEditFunction(task.id)
                 }
+
+
+                val subTasksText = taskWithSubTasks.subtasks.joinToString(separator = "\n") { subTask ->
+                    "- Subtask: ${subTask.name}, Completed: ${if (subTask.isCompleted) "Yes" else "No"}"
+                }
+                val tagsText = task.tags.joinToString(separator = ", ") { "#$it" }
+
+                // Long press to copy task details to clipboard
+                binding.root.setOnLongClickListener {
+                    val clipboard = binding.root.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clipData = ClipData.newPlainText(
+                        "Task Details",
+                        "Task: ${task.name}\n" +
+                                "Priority: ${priorities[task.priority]}\n" +
+                                "Completion Date: ${task.completionDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}\n" +
+                                "Tags: $tagsText\n" +
+                                "Subtasks:\n$subTasksText \n" +
+                                "Completion Status: ${if (task.isCompleted) "Completed" else "Incomplete"}\n"
+
+                    )
+                    clipboard.setPrimaryClip(clipData)
+
+                    // Show confirmation to the user
+                    Snackbar.make(binding.root, R.string.task_copied_to_clipboard_message, Snackbar.LENGTH_SHORT).show()
+
+                    true // Indicate that the long press was handled
+                }
+
             } catch (e: Exception) {
                 Log.e("TaskAdapter", "Error binding task at position $position: ${e.message}")
                 // Optionally, show a user-friendly message or take other actions
