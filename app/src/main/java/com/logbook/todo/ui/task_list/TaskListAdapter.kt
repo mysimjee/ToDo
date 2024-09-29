@@ -161,7 +161,11 @@ class TaskListAdapter(
                 binding.listViewSubtasks.visibility = if (isExpanded && taskWithSubTasks.subtasks.isNotEmpty()) View.VISIBLE else View.GONE
                 binding.textViewSubTask.visibility = if (isExpanded && taskWithSubTasks.subtasks.isNotEmpty()) View.VISIBLE else View.GONE
                 binding.checkBoxTaskCompletionStatus.visibility = if (isExpanded) View.VISIBLE else View.GONE
-                binding.imageViewAttachment.visibility = if (isExpanded) View.VISIBLE else View.GONE
+                binding.imageViewAttachment.visibility = if (isExpanded && task.photoAttachment != null) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
                 binding.buttonEdit.visibility = if (isExpanded) View.VISIBLE else View.GONE
                 binding.buttonDelete.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
@@ -210,8 +214,7 @@ class TaskListAdapter(
 
 
                 // Load attachment image from URI (if available)
-                task.photoAttachment?.let {
-                    val uri = it
+                task.photoAttachment?.let { uri ->
                     binding.imageViewAttachment.setImageURI(uri) // Uncomment this if you're using URI
                 }
 
