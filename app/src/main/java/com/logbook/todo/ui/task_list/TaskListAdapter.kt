@@ -284,7 +284,6 @@ class TaskListAdapter(
 
             } catch (e: Exception) {
                 Log.e("TaskAdapter", "Error binding task at position $position: ${e.message}")
-                // Optionally, show a user-friendly message or take other actions
             }
         }
 
