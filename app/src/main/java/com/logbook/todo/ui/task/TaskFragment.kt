@@ -504,6 +504,9 @@ class TaskFragment : Fragment(), FontSizeAware {
                     val subTaskName = dialogBinding.editTextSubTaskName.text.toString().trim() // Trim input
                     val isCompleted = dialogBinding.checkBoxIsCompleted.isChecked
 
+                    dialogBinding.editTextSubTaskName.textSize = fontSize
+                    dialogBinding.checkBoxIsCompleted.textSize = fontSize
+
                     // Check if the subTaskName is not empty
                     if (subTaskName.isNotEmpty()) {
                         viewModel.task.value?.let { currentTask ->
