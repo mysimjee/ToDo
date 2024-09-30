@@ -42,6 +42,18 @@ class TaskRepository private constructor(context: Context) {
         }
     }
 
+    // Retrieve tasks
+   /* suspend fun getSubTask(id: Int): SubTask? {
+        return try {
+            withContext(Dispatchers.IO) {
+                db.taskDao().findSubTaskById(id)
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error retrieving task with id: $id", e)
+            null
+        }
+    }*/
+
     // Retrieve subtasks
     suspend fun getSubTasks(taskId: Int): List<SubTask>? {
         return try {
@@ -103,6 +115,7 @@ class TaskRepository private constructor(context: Context) {
         }
     }
 
+
     // Insert a new subtask
     suspend fun insertSubTask(subTask: SubTask) {
         try {
@@ -135,6 +148,7 @@ class TaskRepository private constructor(context: Context) {
             Log.e(tag, "Error deleting task: $task", e)
         }
     }
+
 
     // Update the completion status of a task
     suspend fun updateTaskCompletionStatus(taskId: Int, isCompleted: Boolean) {

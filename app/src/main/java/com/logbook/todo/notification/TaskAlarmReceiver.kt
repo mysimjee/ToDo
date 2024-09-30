@@ -9,7 +9,6 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.logbook.todo.AppLifecycleObserver
 import com.logbook.todo.MainActivity
 import com.logbook.todo.R
 
@@ -26,35 +25,31 @@ class TaskAlarmReceiver : BroadcastReceiver() {
             createNotificationChannel(context)
 
 
-            if (!AppLifecycleObserver.isInForeground) {
-                val notificationIntent =
-                    Intent(context, MainActivity::class.java) // Modify as needed
-                val pendingIntent = PendingIntent.getActivity(
-                    context,
-                    taskId,
-                    notificationIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
+            val notificationIntent =
+                Intent(context, MainActivity::class.java) // Modify as needed
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                taskId,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
 
-                val builder = NotificationCompat.Builder(context, "TASK_REMINDER_CHANNEL")
-                    .setSmallIcon(R.drawable.baseline_circle_notifications_24)
-                    .setContentTitle("Task Reminder")
-                    .setContentText("Reminder for: $taskTitle")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
+            val builder = NotificationCompat.Builder(context, "TASK_REMINDER_CHANNEL")
+                .setSmallIcon(R.drawable.baseline_circle_notifications_24)
+                .setContentTitle("Task Reminder")
+                .setContentText("Reminder for: $taskTitle")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
 
-                try {
-                    // Attempt to show the notification
-                    with(NotificationManagerCompat.from(context)) {
-                        notify(taskId, builder.build())
-                    }
-                } catch (e: SecurityException) {
-                    // Handle the SecurityException when notification permission is not granted
-                    Log.e(tag, "Failed to send notification due to missing permission", e)
+            try {
+                // Attempt to show the notification
+                with(NotificationManagerCompat.from(context)) {
+                    notify(taskId, builder.build())
                 }
-            }  else {
-                Log.d(tag, "App is in the foreground.")
+            } catch (e: SecurityException) {
+                // Handle the SecurityException when notification permission is not granted
+                Log.e(tag, "Failed to send notification due to missing permission", e)
             }
 
         } catch (e: Exception) {

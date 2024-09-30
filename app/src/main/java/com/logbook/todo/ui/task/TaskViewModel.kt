@@ -10,7 +10,9 @@ import com.logbook.todo.TaskRepository
 import com.logbook.todo.database.entities.SubTask
 import com.logbook.todo.database.entities.Task
 import com.logbook.todo.notification.NotificationScheduler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.random.Random
@@ -87,6 +89,10 @@ class TaskViewModel : ViewModel() {
                 if (updatedSubtasks.remove(subTask)) {
                     // Update the LiveData with the new list of subtasks
                     _subtasks.value = updatedSubtasks
+
+                    viewModelScope.launch(Dispatchers.IO) {
+                        taskRepository.deleteSubTask(subTask)
+                    }
                 } else {
                     Log.e("TaskViewModel", "Subtask not found for removal.")
                 }
@@ -271,6 +277,7 @@ class TaskViewModel : ViewModel() {
     private fun resetTask() {
         try {
             _task.value = Task(
+                id = Random.nextInt(),
                 name = "",
                 isCompleted = false,
                 completionDate = LocalDateTime.now(),

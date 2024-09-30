@@ -26,6 +26,8 @@ interface TaskDao {
     @Delete
     suspend fun deleteSubTask(subTask: SubTask)
 
+    @Query("SELECT * FROM subtasks WHERE id = :id LIMIT 1")
+    suspend fun findSubTaskById(id: Int): SubTask?
 
 
     @Query("SELECT * FROM tasks WHERE id = :id")

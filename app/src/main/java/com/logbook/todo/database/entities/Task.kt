@@ -4,11 +4,12 @@ import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
+import kotlin.random.Random
 
 
 @Entity(tableName = "tasks")
 data class Task(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0, // Auto-generate ID
+    @PrimaryKey(autoGenerate = true) var id: Int = Random.nextInt(), // Auto-generate ID
     var name: String = "", // Default value for name
     var photoAttachment: Uri? = null, // Default value for nullable property
     var completionDate: LocalDateTime? = null, // Default value for nullable property

@@ -20,7 +20,6 @@ class ToDoApplication : Application() {
 
 
         try {
-            registerActivityLifecycleCallbacks(AppLifecycleObserver)
             TaskRepository.initialize(this)
 
             // Initialize SharedPreferences
