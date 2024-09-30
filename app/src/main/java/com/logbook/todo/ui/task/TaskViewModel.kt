@@ -258,12 +258,18 @@ class TaskViewModel : ViewModel() {
                     // No deletion of subtasks, even if the task is completed
 
                     // Schedule or cancel a notification for the task
-                    if (!taskToUpdate.isCompleted) {
+                    if (taskToUpdate.completionDate?.isBefore(LocalDateTime.now()) == true) {
+                        // If the completion date is in the past, cancel the notification
+                        NotificationScheduler.cancelTaskNotification(context, taskToUpdate.id)
+                    } else if (!taskToUpdate.isCompleted) {
+                        // If the task is not completed and the completion date is valid
                         NotificationScheduler.cancelTaskNotification(context, taskToUpdate.id)
                         NotificationScheduler.scheduleTaskNotification(context, taskToUpdate)
                     } else {
+                        // If the task is completed, cancel the notification
                         NotificationScheduler.cancelTaskNotification(context, taskToUpdate.id)
                     }
+
 
                     Log.d("TaskViewModel", "Task and subtasks updated successfully.")
                 } catch (e: Exception) {
