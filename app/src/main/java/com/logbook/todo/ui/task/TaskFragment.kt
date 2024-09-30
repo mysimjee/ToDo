@@ -650,7 +650,6 @@ class TaskFragment : Fragment(), FontSizeAware {
                     // Update the checkedItems array when a tag is checked or unchecked
                     checkedItems[which] = isChecked
 
-
                 }
                 .setPositiveButton(R.string.dialog_select_tags_ok) { dialog, _ ->
                     // Collect the selected tags
@@ -671,11 +670,19 @@ class TaskFragment : Fragment(), FontSizeAware {
             // Add a listener to enable/disable the positive button based on selection
             alertDialog.setOnShowListener {
                 val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                positiveButton.isEnabled = checkedItems.any { it } // Enable if any tag is selected
 
-                // Set up a listener to check selection changes
-                alertDialog.listView.setOnItemClickListener { _, _, _, _ ->
-                    positiveButton.isEnabled = checkedItems.any { it } // Update button state on item click
+                // Initial check for button state
+                positiveButton.isEnabled = checkedItems.any { it } // Enable if at least one tag is selected
+
+                alertDialog.listView.setOnItemClickListener { _, _, position, _ ->
+                    // Toggle the checked state
+                    checkedItems[position] = !checkedItems[position]
+
+                    // Count the number of checked items
+                    val checkedCount = checkedItems.count { it }
+
+                    // Enable or disable the positive button based on checked items
+                    positiveButton.isEnabled = checkedCount > 0 // Enable if at least one tag is selected
                 }
             }
 
