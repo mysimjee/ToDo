@@ -126,11 +126,13 @@ class TaskListAdapter(
             binding.buttonDelete.textSize = size
 
             binding.textViewSubTask.textSize = size
-            binding.listViewSubtasks.setOnItemClickListener { _, view, _, _ ->
-                (view as? TextView)?.apply {
-                    textSize = size // Set desired font size
+            for (i in 0 until binding.listViewSubtasks.childCount) {
+                val view = binding.listViewSubtasks.getChildAt(i) as? TextView
+                view?.let {
+                    it.textSize = size // Set desired font size
                 }
             }
+
 
 
             // Set font size for each Chip in the ChipGroup
