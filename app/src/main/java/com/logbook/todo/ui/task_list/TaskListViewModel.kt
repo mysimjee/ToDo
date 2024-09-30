@@ -80,11 +80,14 @@ class TaskListViewModel : ViewModel() {
                 } else {
                     // If the task is not completed, schedule a notification
                     val task = taskRepository.getTask(taskId) // Retrieve task details (modify as needed)
-                    NotificationScheduler.cancelTaskNotification(context, taskId)
+
                     if (task != null) {
+                        NotificationScheduler.cancelTaskNotification(context, taskId)
                         NotificationScheduler.scheduleTaskNotification(
                             context, task
                         )
+                    } else {
+                        NotificationScheduler.cancelTaskNotification(context, taskId)
                     }
                 }
 
