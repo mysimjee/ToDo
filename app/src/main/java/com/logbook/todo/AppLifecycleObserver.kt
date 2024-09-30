@@ -21,5 +21,7 @@ object AppLifecycleObserver : Application.ActivityLifecycleCallbacks {
         isInForeground = false
     }
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-    override fun onActivityDestroyed(activity: Activity) {}
+    override fun onActivityDestroyed(activity: Activity) {
+        isInForeground = false
+    }
 }
