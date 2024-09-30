@@ -182,7 +182,7 @@ class TaskListAdapter(
                 }
 
                 // Handle ListView for subtasks
-                val subTaskList = taskWithSubTasks.subtasks
+                val subTaskList = taskWithSubTasks.subtasks.sortedBy { it.addedDate }
                 if (subTaskList.isNotEmpty()) {
                     val subTaskAdapter = SubTaskListAdapter(
                         binding.listViewSubtasks.context,
