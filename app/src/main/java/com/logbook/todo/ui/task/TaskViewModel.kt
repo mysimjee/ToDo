@@ -1,5 +1,6 @@
 package com.logbook.todo.ui.task
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.logbook.todo.TaskRepository
 import com.logbook.todo.database.entities.SubTask
 import com.logbook.todo.database.entities.Task
+import com.logbook.todo.notification.NotificationScheduler
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -199,7 +201,7 @@ class TaskViewModel : ViewModel() {
     }
 
     // Function to save the current task
-    fun saveTask() {
+    fun saveTask(context: Context) {
         _task.value?.let { taskToSave ->
             viewModelScope.launch {
                 try {
@@ -207,7 +209,13 @@ class TaskViewModel : ViewModel() {
                     subtasks.value?.forEach { subTask ->
                         taskRepository.insertSubTask(subTask)
                     }
-                    // Optionally reset the task after saving
+
+                    // Schedule a notification for the task if it is not completed
+                    if (!taskToSave.isCompleted) {
+                        NotificationScheduler.scheduleTaskNotification(context, taskToSave)
+                    }
+
+                    // reset the task after saving
                     resetTask()
                 } catch (e: Exception) {
                     Log.e("TaskViewModel", "Error saving task: ${e.message}", e)
@@ -217,7 +225,7 @@ class TaskViewModel : ViewModel() {
     }
 
     // Function to update the selected task
-    fun updateTask() {
+    fun updateTask(context: Context) {
         _task.value?.let { taskToUpdate ->
             viewModelScope.launch {
                 try {
@@ -244,6 +252,14 @@ class TaskViewModel : ViewModel() {
                     // Delete the remaining subtasks that were not in the new list
                     existingSubTasks?.forEach { subTaskToDelete ->
                         taskRepository.deleteSubTask(subTaskToDelete)
+                    }
+
+                    // Schedule a notification for the task if it is not completed
+                    if (!taskToUpdate.isCompleted) {
+                        NotificationScheduler.cancelTaskNotification(context, taskToUpdate.id)
+                        NotificationScheduler.scheduleTaskNotification(context, taskToUpdate)
+                    } else {
+                        NotificationScheduler.cancelTaskNotification(context, taskToUpdate.id)
                     }
 
                     Log.d("TaskViewModel", "Task and subtasks updated successfully.")

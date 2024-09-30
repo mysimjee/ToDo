@@ -104,7 +104,7 @@
         <ListView
             android:id="@+id/listViewSubtasks"
             android:layout_width="match_parent"
-            app:layout_constraintHeight_min="60dp"
+            app:layout_constraintHeight_min="160dp"
             app:layout_constraintHeight_max="300dp"
             android:layout_height="60dp"
         android:maxHeight="300dp"
@@ -128,9 +128,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:singleLine="false">
-
-            <!-- Example chips (These can be added dynamically in code) -->
-            <!-- You can add chips here if you want default values -->
         </com.google.android.material.chip.ChipGroup>
 
         <!-- Completion Status -->

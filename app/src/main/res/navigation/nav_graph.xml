@@ -8,24 +8,24 @@
     <fragment
         android:id="@+id/taskListFragment"
         android:name="com.logbook.todo.ui.task_list.TaskListFragment"
-        android:label="@string/menu_home" />
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_task_list"/>
     <fragment
-        android:id="@+id/taskFragment"
+        android:id="@+id/addTaskFragment"
         android:name="com.logbook.todo.ui.task.TaskFragment"
-        android:label="@string/menu_add_task" >
-        <argument
-            android:name="taskId"
-            app:argType="long"
-            android:defaultValue="1234L" />
-    </fragment>
+        android:label="@string/menu_add_task"
+        tools:layout="@layout/fragment_task"/>
+
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.logbook.todo.ui.task.TaskFragment"
+        android:label="@string/menu_edit_task"
+        tools:layout="@layout/fragment_task"/>
+
 
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.logbook.todo.ui.about.AboutFragment"
         android:label="@string/menu_about"
-        tools:layout="@layout/fragment_about" />
-    <argument
-        android:name="taskId"
-        app:argType="long"
-        android:defaultValue="1234L" />
+        tools:layout="@layout/fragment_about"/>
 </navigation>

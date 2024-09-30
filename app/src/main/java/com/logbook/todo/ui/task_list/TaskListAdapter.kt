@@ -26,6 +26,7 @@ import java.time.format.DateTimeFormatter
 
 class TaskListAdapter(
     private val viewModel: TaskListViewModel,
+    private val context: Context,
     private val priorities: Array<String>,
     private val onEditFunction: (Long) -> Unit
 ) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>(), FontSizeAware {
@@ -243,7 +244,7 @@ class TaskListAdapter(
                 binding.checkBoxTaskCompletionStatus.setOnCheckedChangeListener(null)
                 binding.checkBoxTaskCompletionStatus.isChecked = task.isCompleted
                 binding.checkBoxTaskCompletionStatus.setOnCheckedChangeListener { _, isChecked ->
-                    viewModel.updateTaskCompletionStatus(task.id, isChecked)
+                    viewModel.updateTaskCompletionStatus(task.id, isChecked, context)
                     viewModel.updateSubTasksCompletionStatusByTaskId(task.id, isChecked)
 
                     val messageResId = if (isChecked) R.string.task_completed_message else R.string.task_incomplete_message
@@ -313,7 +314,7 @@ class TaskListAdapter(
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteTask(taskWithSubTasks: TaskWithSubTasks) {
         try {
-            viewModel.deleteTask(taskWithSubTasks.task)
+            viewModel.deleteTask(taskWithSubTasks.task, context)
             notifyDataSetChanged()
         } catch (e: Exception) {
             // Log the exception (optional)

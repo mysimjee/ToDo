@@ -139,4 +139,5 @@
     <string name="show_completed">SHOW COMPLETE</string>
     <string name="expand_collapse_button_description">Expand Task Card</string>
     <string name="task_copied_to_clipboard_message">Task Copied!</string>
+    <string name="error_past_date_time_selection">Cannot Select Past Date!</string>
 </resources>

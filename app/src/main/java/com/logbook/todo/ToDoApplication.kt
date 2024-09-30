@@ -17,9 +17,12 @@ class ToDoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        TaskRepository.initialize(this)
+
 
         try {
+            registerActivityLifecycleCallbacks(AppLifecycleObserver)
+            TaskRepository.initialize(this)
+
             // Initialize SharedPreferences
             val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
             selectedFontSizeIndex = sharedPreferences.getInt(PREFS_FONT_SIZE_INDEX, 1) // Default to Medium
@@ -28,8 +31,7 @@ class ToDoApplication : Application() {
             // Set the theme based on the preference
             setNightMode()
         } catch (e: Exception) {
-            // Handle the exception (e.g., log it, show a message, etc.)
-            e.printStackTrace() // You can replace this with a logging statement if needed
+            e.printStackTrace()
         }
     }
 

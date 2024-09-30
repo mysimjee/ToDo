@@ -120,7 +120,7 @@ class TaskListFragment : Fragment(), FontSizeAware {
                    val bundle = Bundle().apply {
                        putLong("taskId", 1234L)
                    }
-                   findNavController().navigate(R.id.taskFragment, bundle)
+                   findNavController().navigate(R.id.addTaskFragment, bundle)
                } catch (e: Exception) {
                    Log.e("Task List", "Error launching form to add task: ${e.message}")
                    Toast.makeText(requireContext(), "Error launching form to add task", Toast.LENGTH_SHORT).show()
@@ -135,21 +135,24 @@ class TaskListFragment : Fragment(), FontSizeAware {
 
     private fun setupRecyclerView() {
         try {
-            taskListAdapter = TaskListAdapter(
-                viewModel = taskListViewModel,
-                priorities = resources.getStringArray(R.array.priority_array),
-                onEditFunction = { taskId: Long ->
-                    try {
-                        val bundle = Bundle().apply {
-                            putLong("taskId", taskId)
+            taskListAdapter = context?.let {
+                TaskListAdapter(
+                    viewModel = taskListViewModel,
+                    it,
+                    priorities = resources.getStringArray(R.array.priority_array),
+                    onEditFunction = { taskId: Long ->
+                        try {
+                            val bundle = Bundle().apply {
+                                putLong("taskId", taskId)
+                            }
+                            findNavController().navigate(R.id.editTaskFragment, bundle)
+                        } catch (e: Exception) {
+                            Log.e("TaskListAdapter", "Error setting up  TaskListAdapter: ${e.message}")
+                            Toast.makeText(requireContext(), "Error setting up TaskListAdapter", Toast.LENGTH_SHORT).show()
                         }
-                        findNavController().navigate(R.id.taskFragment, bundle)
-                    } catch (e: Exception) {
-                        Log.e("TaskListAdapter", "Error setting up  TaskListAdapter: ${e.message}")
-                        Toast.makeText(requireContext(), "Error setting up TaskListAdapter", Toast.LENGTH_SHORT).show()
                     }
-                }
-            )
+                )
+            }!!
 
             binding.recyclerViewTasks.apply {
                 layoutManager = LinearLayoutManager(requireContext())

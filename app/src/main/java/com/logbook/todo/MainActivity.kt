@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 1001
+        private const val REQUEST_CODE_NOTIFICATION_PERMISSIONS = 1002
 
         private const val PREFS_DARK_MODE = "DARK_MODE"
         private const val PREFS_FONT_SIZE_INDEX = "FONT_SIZE_INDEX"
@@ -90,11 +91,15 @@ class MainActivity : AppCompatActivity() {
                     arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
                     REQUEST_CODE_PERMISSIONS)
             }
+
+            checkNotificationPermission()
+
         } catch (e: Exception) {
             e.printStackTrace() // Log the exception
             Toast.makeText(this, "Error initializing the app: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -111,11 +116,33 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Permission Denied To Access Gallery", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            if (requestCode == REQUEST_CODE_NOTIFICATION_PERMISSIONS) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace() // Log the exception
             Toast.makeText(this, "Error handling permissions: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun checkNotificationPermission() {
+       try {
+           if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+               // Request notification permission
+               ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_NOTIFICATION_PERMISSIONS)
+           }
+       }  catch (e: Exception) {
+           e.printStackTrace() // Log the exception
+           Toast.makeText(this, "Error handling notification permissions: ${e.message}", Toast.LENGTH_SHORT).show()
+       }
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         try {

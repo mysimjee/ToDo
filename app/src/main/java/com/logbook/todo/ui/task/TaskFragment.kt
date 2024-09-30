@@ -197,7 +197,6 @@ class TaskFragment : Fragment(), FontSizeAware {
                 }
             }
 
-            binding.chipGroupTags
             binding.checkBoxIsCompleted.textSize = fontSize
 
             subTaskAdapter.setFontSize(fontSize)
@@ -344,10 +343,10 @@ class TaskFragment : Fragment(), FontSizeAware {
                 try {
                     taskId?.let { id ->
                         if (id != 1234L) {
-                            viewModel.updateTask()
+                            context?.let { viewModel.updateTask(it) }
                             Snackbar.make(binding.root, getString(R.string.task_updated_successfully), Snackbar.LENGTH_SHORT).show()
                         } else {
-                            viewModel.saveTask()
+                            context?.let { viewModel.saveTask(it) }
                             Snackbar.make(binding.root, getString(R.string.task_saved_successfully), Snackbar.LENGTH_SHORT).show()
                         }
                     }
@@ -439,7 +438,8 @@ class TaskFragment : Fragment(), FontSizeAware {
         } catch (e: Exception) {
             // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error in validateTaskFields: ${e.message}", e)
-            // Optionally, disable the Save button to prevent saving invalid data
+
+            // disable the Save button to prevent saving invalid data
             binding.buttonSaveTask.isEnabled = false
             Snackbar.make(binding.root, getString(R.string.error_validating_task_fields), Snackbar.LENGTH_SHORT).show()
         }
@@ -544,15 +544,17 @@ class TaskFragment : Fragment(), FontSizeAware {
     private fun showDateTimePickerDialog() {
         try {
             val calendar = Calendar.getInstance()
+            val currentDateTime = LocalDateTime.now() // Get the current date and time
+
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
             // Step 1: Show DatePickerDialog
             val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-                // Step 2: Show TimePickerDialog after selecting date
+                // Step 2: Show TimePickerDialog after selecting the date
                 val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
-                    // Step 3: Combine date and time into LocalDateTime
+                    // Combine date and time into LocalDateTime
                     val selectedDateTime = LocalDateTime.of(
                         selectedYear,
                         selectedMonth + 1, // Month is 0-based, add 1
@@ -561,20 +563,36 @@ class TaskFragment : Fragment(), FontSizeAware {
                         selectedMinute
                     )
 
-                    // Set the completion date using your view model
-                    viewModel.setCompletionDate(selectedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    // Step 3: Ensure selected date-time is not less than the current date-time
+                    if (selectedDateTime.isBefore(currentDateTime)) {
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.error_past_date_time_selection),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // Set the completion date using your view model
+                        viewModel.setCompletionDate(selectedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
 
                 // Show the time picker dialog
                 timePickerDialog.show()
             }, year, month, day)
 
+            // Step 4: Prevent selecting dates before today
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
             // Show the date picker dialog
             datePickerDialog.show()
         } catch (e: Exception) {
             // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error showing date-time picker dialog: ${e.message}", e)
-            Snackbar.make(binding.root, getString(R.string.error_showing_date_time_picker_dialog), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                binding.root,
+                getString(R.string.error_showing_date_time_picker_dialog),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
