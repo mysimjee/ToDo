@@ -1,7 +1,7 @@
 package com.logbook.todo.ui.task_list
 
 import android.content.Context
-import android.graphics.Color
+
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -28,8 +28,7 @@ class SubTaskListAdapter(
         }
         view.layoutParams = params
 
-        // Set a transparent background to prevent touch effects
-        view.setBackgroundColor(Color.TRANSPARENT)
+
 
         // Enable text wrapping
         view.maxLines = Integer.MAX_VALUE // Allow as many lines as needed
