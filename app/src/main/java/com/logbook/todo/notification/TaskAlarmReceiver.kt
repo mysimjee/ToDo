@@ -19,7 +19,7 @@ class TaskAlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         try {
-            val taskId = intent.getLongExtra("TASK_ID", -1)
+            val taskId = intent.getIntExtra("TASK_ID", -1)
             val taskTitle = intent.getStringExtra("TASK_TITLE") ?: "Task"
 
             // Create a notification channel if necessary
@@ -31,7 +31,7 @@ class TaskAlarmReceiver : BroadcastReceiver() {
                     Intent(context, MainActivity::class.java) // Modify as needed
                 val pendingIntent = PendingIntent.getActivity(
                     context,
-                    taskId.toInt(),
+                    taskId,
                     notificationIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
@@ -47,7 +47,7 @@ class TaskAlarmReceiver : BroadcastReceiver() {
                 try {
                     // Attempt to show the notification
                     with(NotificationManagerCompat.from(context)) {
-                        notify(taskId.toInt(), builder.build())
+                        notify(taskId, builder.build())
                     }
                 } catch (e: SecurityException) {
                     // Handle the SecurityException when notification permission is not granted
