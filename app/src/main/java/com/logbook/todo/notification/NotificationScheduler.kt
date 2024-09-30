@@ -1,5 +1,6 @@
 package com.logbook.todo.notification
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -49,6 +50,7 @@ object NotificationScheduler {
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     private fun requestExactAlarmPermission(context: Context) {
         try {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {

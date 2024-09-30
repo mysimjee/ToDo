@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.Manifest
+import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
@@ -86,10 +87,13 @@ class MainActivity : AppCompatActivity() {
             // Check for permission and request if not granted
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
                 != PackageManager.PERMISSION_GRANTED) {
+
                 // Request permission
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
-                    REQUEST_CODE_PERMISSIONS)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                        REQUEST_CODE_PERMISSIONS)                }
+
             }
 
             checkNotificationPermission()
@@ -134,7 +138,9 @@ class MainActivity : AppCompatActivity() {
        try {
            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                // Request notification permission
-               ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_NOTIFICATION_PERMISSIONS)
+               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                   ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_NOTIFICATION_PERMISSIONS)
+               }
            }
        }  catch (e: Exception) {
            e.printStackTrace() // Log the exception

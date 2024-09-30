@@ -23,7 +23,7 @@ class TaskListViewModel : ViewModel() {
     val tasksByDate: LiveData<Map<String, List<TaskWithSubTasks>>> get() = _tasksByDate
 
     // LiveData to indicate whether completed tasks are selected
-    private val _showCompletedTasks = MutableLiveData<Boolean>(false)
+    private val _showCompletedTasks = MutableLiveData(false)
 
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") // Customize the format as needed
 

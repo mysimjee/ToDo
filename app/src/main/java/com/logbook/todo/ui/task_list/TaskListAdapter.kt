@@ -126,7 +126,7 @@ class TaskListAdapter(
             binding.buttonDelete.textSize = size
 
             binding.textViewSubTask.textSize = size
-            binding.listViewSubtasks.setOnItemClickListener { parent, view, position, id ->
+            binding.listViewSubtasks.setOnItemClickListener { _, view, _, _ ->
                 (view as? TextView)?.apply {
                     textSize = size // Set desired font size
                 }
