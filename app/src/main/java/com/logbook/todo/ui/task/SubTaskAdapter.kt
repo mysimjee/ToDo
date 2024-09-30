@@ -27,6 +27,8 @@ class SubTaskAdapter(
 
         init {
             try {
+
+
                 binding.root.setOnLongClickListener {
                     try {
                         onLongPress(subTasks[adapterPosition])
