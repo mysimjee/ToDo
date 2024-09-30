@@ -14,7 +14,7 @@ import com.logbook.todo.ui.FontSizeAware
 
 class SubTaskAdapter(
     var subTasks: List<SubTask>,
-    private val onSubTaskClick: (SubTask) -> Unit,
+
     private val onLongPress: (SubTask) -> Unit,
     private val viewModel: TaskViewModel
 ) : RecyclerView.Adapter<SubTaskAdapter.SubTaskViewHolder>() , FontSizeAware {
@@ -27,13 +27,6 @@ class SubTaskAdapter(
 
         init {
             try {
-                binding.root.setOnClickListener {
-                    try {
-                        onSubTaskClick(subTasks[adapterPosition])
-                    } catch (e: Exception) {
-                        Log.e("SubTaskAdapter", "Error on sub-task click: ${e.message}", e)
-                    }
-                }
                 binding.root.setOnLongClickListener {
                     try {
                         onLongPress(subTasks[adapterPosition])
@@ -50,16 +43,16 @@ class SubTaskAdapter(
         override fun setFontSize(size: Float) {
             // Set the font size for each TextView and Chip in this ViewHolder
             binding.textViewSubtaskName.textSize = size
-            binding.checkBoxCompleted.textSize = size
+            binding.checkBoxSubTaskCompleted.textSize = size
 
         }
 
         fun bind(subTask: SubTask) {
             try {
                 binding.textViewSubtaskName.text = subTask.name
-                binding.checkBoxCompleted.isChecked = subTask.isCompleted
+                binding.checkBoxSubTaskCompleted.isChecked = subTask.isCompleted
 
-                binding.checkBoxCompleted.setOnCheckedChangeListener { _, isChecked ->
+                binding.checkBoxSubTaskCompleted.setOnCheckedChangeListener { _, isChecked ->
                     try {
                         viewModel.updateSubTaskCompletion(subTask, isChecked) // Call the ViewModel to update the completion status
                     } catch (e: Exception) {

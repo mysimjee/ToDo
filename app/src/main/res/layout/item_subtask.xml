@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkBoxCompleted"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxSubTaskCompleted"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <CheckBox
-        android:id="@+id/checkBoxCompleted"
+        android:id="@+id/checkBoxSubTaskCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

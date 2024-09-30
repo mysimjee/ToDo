@@ -71,7 +71,7 @@ class TaskListViewModel : ViewModel() {
     }
 
 
-    fun updateTaskCompletionStatus(taskId: Long, isCompleted: Boolean, context: Context) {
+    fun updateTaskCompletionStatus(taskId: Int, isCompleted: Boolean, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 taskRepository.updateTaskCompletionStatus(taskId, isCompleted)
@@ -100,7 +100,7 @@ class TaskListViewModel : ViewModel() {
         }
     }
 
-    fun updateSubTaskCompletionStatus(subTaskId: Long, isCompleted: Boolean) {
+    fun updateSubTaskCompletionStatus(subTaskId: Int, isCompleted: Boolean) {
         viewModelScope.launch {
             try {
                 taskRepository.updateSubTaskCompletionStatus(subTaskId, isCompleted)
@@ -110,7 +110,7 @@ class TaskListViewModel : ViewModel() {
         }
     }
 
-    fun updateSubTasksCompletionStatusByTaskId(taskId: Long, isCompleted: Boolean) {
+    fun updateSubTasksCompletionStatusByTaskId(taskId: Int, isCompleted: Boolean) {
         viewModelScope.launch {
             try {
                 taskRepository.updateSubTasksCompletionStatusByTaskId(taskId, isCompleted)

@@ -27,7 +27,7 @@ class TaskListAdapter(
     private val viewModel: TaskListViewModel,
     private val context: Context,
     private val priorities: Array<String>,
-    private val onEditFunction: (Long) -> Unit
+    private val onEditFunction: (Int) -> Unit
 ) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>(), FontSizeAware {
 
     private var fontSize: Float = 16f // Default font size
@@ -111,7 +111,7 @@ class TaskListAdapter(
     inner class TaskViewHolder(
         private val binding: ItemTaskCardBinding,
         private val priorities: Array<String>,
-        private val onEditFunction: (Long) -> Unit
+        private val onEditFunction: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) , FontSizeAware {
 
         @SuppressLint("NotifyDataSetChanged")
@@ -182,7 +182,7 @@ class TaskListAdapter(
                 }
 
                 // Handle ListView for subtasks
-                val subTaskList = taskWithSubTasks.subtasks.sortedBy { it.addedDate }
+                val subTaskList = taskWithSubTasks.subtasks
                 if (subTaskList.isNotEmpty()) {
                     val subTaskAdapter = SubTaskListAdapter(
                         binding.listViewSubtasks.context,

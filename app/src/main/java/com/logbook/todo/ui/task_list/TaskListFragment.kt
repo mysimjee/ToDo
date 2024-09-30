@@ -140,10 +140,10 @@ class TaskListFragment : Fragment(), FontSizeAware {
                     viewModel = taskListViewModel,
                     it,
                     priorities = resources.getStringArray(R.array.priority_array),
-                    onEditFunction = { taskId: Long ->
+                    onEditFunction = { taskId: Int ->
                         try {
                             val bundle = Bundle().apply {
-                                putLong("taskId", taskId)
+                                putInt("taskId", taskId)
                             }
                             findNavController().navigate(R.id.editTaskFragment, bundle)
                         } catch (e: Exception) {

@@ -33,7 +33,7 @@ class TaskViewModel : ViewModel() {
     }
 
     // Function to load a task and its related subtasks
-    fun loadTaskWithSubTasks(taskId: Long) {
+    fun loadTaskWithSubTasks(taskId: Int) {
         viewModelScope.launch {
             try {
                 // Load the task from the repository
@@ -249,12 +249,9 @@ class TaskViewModel : ViewModel() {
                         }
                     }
 
-                    // Delete the remaining subtasks that were not in the new list
-                    existingSubTasks?.forEach { subTaskToDelete ->
-                        taskRepository.deleteSubTask(subTaskToDelete)
-                    }
+                    // No deletion of subtasks, even if the task is completed
 
-                    // Schedule a notification for the task if it is not completed
+                    // Schedule or cancel a notification for the task
                     if (!taskToUpdate.isCompleted) {
                         NotificationScheduler.cancelTaskNotification(context, taskToUpdate.id)
                         NotificationScheduler.scheduleTaskNotification(context, taskToUpdate)
@@ -270,10 +267,10 @@ class TaskViewModel : ViewModel() {
         }
     }
 
+
     private fun resetTask() {
         try {
             _task.value = Task(
-                id = Random.nextLong(),
                 name = "",
                 isCompleted = false,
                 completionDate = LocalDateTime.now(),

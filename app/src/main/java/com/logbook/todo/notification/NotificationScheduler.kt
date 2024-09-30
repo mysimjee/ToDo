@@ -71,12 +71,12 @@ object NotificationScheduler {
     }
 
 
-    fun cancelTaskNotification(context: Context, taskId: Long) {
+    fun cancelTaskNotification(context: Context, taskId: Int) {
         try {
             val intent = Intent(context, TaskAlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
                 context,
-                taskId.toInt(),
+                taskId,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )

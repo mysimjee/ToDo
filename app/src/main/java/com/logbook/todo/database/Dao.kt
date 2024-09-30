@@ -29,10 +29,10 @@ interface TaskDao {
 
 
     @Query("SELECT * FROM tasks WHERE id = :id")
-    suspend fun getTask(id: Long): Task
+    suspend fun getTask(id: Int): Task
 
-    @Query("SELECT * FROM subtasks WHERE taskId = :taskId ORDER BY addedDate ASC")
-    suspend fun getSubTasksForTask(taskId: Long): List<SubTask>
+    @Query("SELECT * FROM subtasks WHERE taskId = :taskId")
+    suspend fun getSubTasksForTask(taskId: Int): List<SubTask>
 
 
 
@@ -50,18 +50,18 @@ interface TaskDao {
 
     // New function to update the isCompleted status of a task
     @Query("UPDATE tasks SET isCompleted = :isCompleted WHERE id = :taskId")
-    suspend fun updateTaskCompletionStatus(taskId: Long, isCompleted: Boolean)
+    suspend fun updateTaskCompletionStatus(taskId: Int, isCompleted: Boolean)
 
 
     // New function to update the isCompleted status of a SubTask
     @Query("UPDATE subtasks SET isCompleted = :isCompleted WHERE id = :subTaskId")
-    suspend fun updateSubTaskCompletionStatus(subTaskId: Long, isCompleted: Boolean)
+    suspend fun updateSubTaskCompletionStatus(subTaskId: Int, isCompleted: Boolean)
 
     @Query("UPDATE subtasks SET isCompleted = :isCompleted WHERE taskId = :taskId")
-    suspend fun updateSubTasksCompletionStatusByTaskId(taskId: Long, isCompleted: Boolean)
+    suspend fun updateSubTasksCompletionStatusByTaskId(taskId: Int, isCompleted: Boolean)
 
     @Query("DELETE FROM subtasks WHERE taskId = :taskId")
-    suspend fun deleteSubTasksByTaskId(taskId: Long)
+    suspend fun deleteSubTasksByTaskId(taskId: Int)
 
 
 }

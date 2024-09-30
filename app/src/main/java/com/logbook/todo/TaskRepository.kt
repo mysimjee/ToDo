@@ -31,7 +31,7 @@ class TaskRepository private constructor(context: Context) {
     }
 
     // Retrieve tasks
-    suspend fun getTask(id: Long): Task? {
+    suspend fun getTask(id: Int): Task? {
         return try {
             withContext(Dispatchers.IO) {
                 db.taskDao().getTask(id)
@@ -43,7 +43,7 @@ class TaskRepository private constructor(context: Context) {
     }
 
     // Retrieve subtasks
-    suspend fun getSubTasks(taskId: Long): List<SubTask>? {
+    suspend fun getSubTasks(taskId: Int): List<SubTask>? {
         return try {
             withContext(Dispatchers.IO) {
                 db.taskDao().getSubTasksForTask(taskId)
@@ -137,7 +137,7 @@ class TaskRepository private constructor(context: Context) {
     }
 
     // Update the completion status of a task
-    suspend fun updateTaskCompletionStatus(taskId: Long, isCompleted: Boolean) {
+    suspend fun updateTaskCompletionStatus(taskId: Int, isCompleted: Boolean) {
         try {
             withContext(Dispatchers.IO) {
                 db.taskDao().updateTaskCompletionStatus(taskId, isCompleted)
@@ -148,7 +148,7 @@ class TaskRepository private constructor(context: Context) {
     }
 
     // Update the isCompleted status of a single SubTask by its ID
-    suspend fun updateSubTaskCompletionStatus(subTaskId: Long, isCompleted: Boolean) {
+    suspend fun updateSubTaskCompletionStatus(subTaskId: Int, isCompleted: Boolean) {
         try {
             withContext(Dispatchers.IO) {
                 db.taskDao().updateSubTaskCompletionStatus(subTaskId, isCompleted)
@@ -159,7 +159,7 @@ class TaskRepository private constructor(context: Context) {
     }
 
     // Update the isCompleted status of all SubTasks associated with a specific Task ID
-    suspend fun updateSubTasksCompletionStatusByTaskId(taskId: Long, isCompleted: Boolean) {
+    suspend fun updateSubTasksCompletionStatusByTaskId(taskId: Int, isCompleted: Boolean) {
         try {
             withContext(Dispatchers.IO) {
                 db.taskDao().updateSubTasksCompletionStatusByTaskId(taskId, isCompleted)

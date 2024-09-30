@@ -41,7 +41,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.random.Random
+
 
 class TaskFragment : Fragment(), FontSizeAware {
     private var fontSize: Float = 16f
@@ -56,8 +56,8 @@ class TaskFragment : Fragment(), FontSizeAware {
 
     private lateinit var priorityAdapter: CustomSpinnerAdapter
 
-    // Use Safe Args to get taskId
-    private var taskId: Long? = null
+
+    private var taskId: Int? = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,12 +77,12 @@ class TaskFragment : Fragment(), FontSizeAware {
 
             // Check if taskId is provided and load task
             arguments?.let {
-                taskId = it.getLong("taskId", -1) // Default value -1 if not found
+                taskId = it.getInt("taskId", -1) // Default value -1 if not found
             }
 
             // Check if taskId is valid and load task
             taskId?.let { id ->
-                if (id != 1234L) {
+                if (id != -1) {
                     viewModel.loadTaskWithSubTasks(id)
                 }
             }
@@ -101,7 +101,7 @@ class TaskFragment : Fragment(), FontSizeAware {
             _binding = FragmentTaskBinding.inflate(inflater, container, false)
 
             taskId?.let { id ->
-                if (id != 1234L) {
+                if (id != -1) {
                     binding.buttonSaveTask.text = getString(R.string.button_update_task)
                 } else {
                     binding.buttonSaveTask.text = getString(R.string.button_save_task)
@@ -214,7 +214,6 @@ class TaskFragment : Fragment(), FontSizeAware {
             binding.recyclerViewSubtasks.layoutManager = LinearLayoutManager(requireContext())
             subTaskAdapter = SubTaskAdapter(
                 emptyList(),
-                onSubTaskClick = { /* Handle subtask click */ },
                 onLongPress = { subTask -> showDeleteConfirmationDialog(subTask) },
                 viewModel
             )
@@ -342,7 +341,7 @@ class TaskFragment : Fragment(), FontSizeAware {
             binding.buttonSaveTask.setOnClickListener {
                 try {
                     taskId?.let { id ->
-                        if (id != 1234L) {
+                        if (id != -1) {
                             context?.let { viewModel.updateTask(it) }
                             Snackbar.make(binding.root, getString(R.string.task_updated_successfully), Snackbar.LENGTH_SHORT).show()
                         } else {
@@ -529,7 +528,6 @@ class TaskFragment : Fragment(), FontSizeAware {
                         viewModel.task.value?.let { currentTask ->
                             // Create the subtask
                             val subTask = SubTask(
-                                id = Random.nextLong(), // Generate a random ID for the subtask
                                 taskId = currentTask.id,
                                 name = subTaskName,
                                 isCompleted = isCompleted

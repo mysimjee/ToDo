@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "tasks")
 data class Task(
-    @PrimaryKey(autoGenerate = true) var id: Long, // Auto-generate ID
+    @PrimaryKey(autoGenerate = true) var id: Int = 0, // Auto-generate ID
     var name: String = "", // Default value for name
     var photoAttachment: Uri? = null, // Default value for nullable property
     var completionDate: LocalDateTime? = null, // Default value for nullable property
