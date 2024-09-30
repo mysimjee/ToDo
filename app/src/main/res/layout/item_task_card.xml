@@ -110,6 +110,8 @@
             app:layout_constraintHeight_max="300dp"
             android:layout_height="60dp"
             android:maxHeight="300dp"
+            android:choiceMode="multipleChoice"
+            android:divider="@android:color/transparent"
             android:scrollbars="vertical"
             android:visibility="visible"
             android:layout_margin="0dp"

@@ -255,7 +255,7 @@ class TaskViewModel : ViewModel() {
                         }
                     }
 
-                    // No deletion of subtasks, even if the task is completed
+
 
                     // Schedule or cancel a notification for the task
                     if (taskToUpdate.completionDate?.isBefore(LocalDateTime.now()) == true) {
