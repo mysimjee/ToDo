@@ -10,9 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -115,6 +113,7 @@ class TaskListAdapter(
         private val onEditFunction: (Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) , FontSizeAware {
 
+        @SuppressLint("NotifyDataSetChanged")
         override fun setFontSize(size: Float) {
             // Set the font size for each TextView and Chip in this ViewHolder
             binding.textViewTaskName.textSize = size
@@ -126,20 +125,13 @@ class TaskListAdapter(
             binding.buttonDelete.textSize = size
 
             binding.textViewSubTask.textSize = size
-            for (i in 0 until binding.listViewSubtasks.childCount) {
-                val view = binding.listViewSubtasks.getChildAt(i) as? TextView
-                view?.let {
-                    it.textSize = size // Set desired font size
-                }
-            }
-
-
 
             // Set font size for each Chip in the ChipGroup
             for (i in 0 until binding.taskChipGroupTags.childCount) {
                 val chip = binding.taskChipGroupTags.getChildAt(i) as? Chip
                 chip?.textSize = size
             }
+
         }
 
         @SuppressLint("SetTextI18n")
@@ -191,12 +183,14 @@ class TaskListAdapter(
                 // Handle ListView for subtasks
                 val subTaskList = taskWithSubTasks.subtasks
                 if (subTaskList.isNotEmpty()) {
-                    val subTaskAdapter = ArrayAdapter(
+                    val subTaskAdapter = SubTaskListAdapter(
                         binding.listViewSubtasks.context,
-                        android.R.layout.simple_list_item_multiple_choice,
-                        subTaskList.map { it.name }
+                        subTaskList.map { it.name },
+                        fontSize // Pass the desired font size
                     )
+
                     binding.listViewSubtasks.adapter = subTaskAdapter
+                    binding.listViewSubtasks.isClickable = false
                     binding.listViewSubtasks.choiceMode = ListView.CHOICE_MODE_MULTIPLE
 
                     // Set the checked state based on the completion status of each subtask
