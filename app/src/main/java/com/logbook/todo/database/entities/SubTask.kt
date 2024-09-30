@@ -16,5 +16,7 @@ data class SubTask(
     @PrimaryKey(autoGenerate = true) var id: Long = Random.nextLong(), // Auto-generate ID
     var taskId: Long = 0, // Default value for foreign key
     var name: String = "", // Default value for name
-    var isCompleted: Boolean = false // Default completion status
+    var isCompleted: Boolean = false, // Default completion status
+    var addedDate: Long = System.currentTimeMillis() // Automatically set the added date
+
 )
