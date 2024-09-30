@@ -500,6 +500,23 @@ class TaskFragment : Fragment(), FontSizeAware {
             .create()
 
         dialog.setOnShowListener {
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+            // Disable the button initially
+            positiveButton.isEnabled = false
+
+            // Add a TextWatcher to the EditText
+            dialogBinding.editTextSubTaskName.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    // Enable or disable the button based on the text input
+                    positiveButton.isEnabled = !s.isNullOrEmpty()
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 try {
                     val subTaskName = dialogBinding.editTextSubTaskName.text.toString().trim() // Trim input
@@ -627,11 +644,13 @@ class TaskFragment : Fragment(), FontSizeAware {
                 currentTags.contains(tags[index])
             }
 
-            AlertDialog.Builder(requireContext())
+            val alertDialog = AlertDialog.Builder(requireContext())
                 .setTitle(R.string.dialog_select_tags_title)
                 .setMultiChoiceItems(tags, checkedItems) { _, which, isChecked ->
                     // Update the checkedItems array when a tag is checked or unchecked
                     checkedItems[which] = isChecked
+
+
                 }
                 .setPositiveButton(R.string.dialog_select_tags_ok) { dialog, _ ->
                     // Collect the selected tags
@@ -643,11 +662,25 @@ class TaskFragment : Fragment(), FontSizeAware {
                         viewModel.removeTag(tag) // Remove unselected tags
                     }
 
+
                     viewModel.addTags(selectedTags) // Add the selected tags
                     dialog.dismiss()
                 }
-                .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
-                .show()
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }.create()
+
+            // Add a listener to enable/disable the positive button based on selection
+            alertDialog.setOnShowListener {
+                val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                positiveButton.isEnabled = checkedItems.any { it } // Enable if any tag is selected
+
+                // Set up a listener to check selection changes
+                alertDialog.listView.setOnItemClickListener { _, _, _, _ ->
+                    positiveButton.isEnabled = checkedItems.any { it } // Update button state on item click
+                }
+            }
+
+            alertDialog.show()
+
         } catch (e: Exception) {
             // Handle the error (e.g., log it or show a Snack bar)
             Log.e("TaskFragment", "Error showing tag selection dialog: ${e.message}", e)
