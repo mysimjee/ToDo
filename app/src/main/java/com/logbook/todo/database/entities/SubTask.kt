@@ -3,6 +3,7 @@ package com.logbook.todo.database.entities
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDateTime
 import kotlin.random.Random
 
 
@@ -17,6 +18,6 @@ data class SubTask(
     var taskId: Long = 0, // Default value for foreign key
     var name: String = "", // Default value for name
     var isCompleted: Boolean = false, // Default completion status
-    var addedDate: Long = System.currentTimeMillis() // Automatically set the added date
+    var addedDate: LocalDateTime = LocalDateTime.now()// Automatically set the added date
 
 )
