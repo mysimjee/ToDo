@@ -9,7 +9,7 @@ import com.logbook.todo.database.entities.Task
 import java.time.ZoneId
 
 object NotificationScheduler {
-    private val tag = "Notification Scheduler"
+    private const val TAG = "Notification Scheduler"
 
     fun scheduleTaskNotification(context: Context, task: Task) {
         try {
@@ -45,7 +45,7 @@ object NotificationScheduler {
             }
         } catch (e: Exception) {
             // Handle the error that might occur during scheduling
-            Log.e(tag, "Error in scheduling notification: ${e.message}", e)
+            Log.e(TAG, "Error in scheduling notification: ${e.message}", e)
         }
     }
 
@@ -64,7 +64,7 @@ object NotificationScheduler {
             }
         } catch (e: Exception) {
             // Handle the error that might occur during scheduling
-            Log.e(tag, "Error in requesting permission for notification alarm: ${e.message}", e)
+            Log.e(TAG, "Error in requesting permission for notification alarm: ${e.message}", e)
         }
     }
 
@@ -82,7 +82,7 @@ object NotificationScheduler {
             alarmManager.cancel(pendingIntent)
         } catch (e: Exception) {
             // Handle the error that might occur during cancelling notification
-            Log.e(tag, "Error in cancelling notification alarm: ${e.message}", e)
+            Log.e(TAG, "Error in cancelling notification alarm: ${e.message}", e)
         }
     }
 }

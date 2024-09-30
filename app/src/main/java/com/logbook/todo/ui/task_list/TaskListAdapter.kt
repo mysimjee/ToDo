@@ -262,6 +262,13 @@ class TaskListAdapter(
                 }
                 val tagsText = task.tags.joinToString(separator = ", ") { "#$it" }
 
+
+                // Set a click listener on the root view
+                binding.root.setOnClickListener {
+                    // Trigger the btnExpandCollapse button's click action
+                    binding.btnExpandCollapse.performClick()
+                }
+
                 // Long press to copy task details to clipboard
                 binding.root.setOnLongClickListener {
                     val clipboard = binding.root.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
