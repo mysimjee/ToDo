@@ -489,7 +489,8 @@ class TaskFragment : Fragment(), FontSizeAware {
 
     private fun showAddSubTaskDialog() {
         val dialogBinding = DialogAddSubtaskBinding.inflate(layoutInflater)
-
+        dialogBinding.editTextSubTaskName.textSize = fontSize
+        dialogBinding.checkBoxIsCompleted.textSize = fontSize
         // Create and set up the dialog
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.add_subtask))
@@ -504,8 +505,7 @@ class TaskFragment : Fragment(), FontSizeAware {
                     val subTaskName = dialogBinding.editTextSubTaskName.text.toString().trim() // Trim input
                     val isCompleted = dialogBinding.checkBoxIsCompleted.isChecked
 
-                    dialogBinding.editTextSubTaskName.textSize = fontSize
-                    dialogBinding.checkBoxIsCompleted.textSize = fontSize
+
 
                     // Check if the subTaskName is not empty
                     if (subTaskName.isNotEmpty()) {
