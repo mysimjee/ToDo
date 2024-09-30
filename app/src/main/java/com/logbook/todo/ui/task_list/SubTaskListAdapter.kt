@@ -1,6 +1,7 @@
 package com.logbook.todo.ui.task_list
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -17,10 +18,15 @@ class SubTaskListAdapter(
         val view = super.getView(position, convertView, parent) as TextView
         view.textSize = fontSize // Set the desired font size
 
-        // Set layout height to wrap content so the text view can grow vertically as needed
+
+        // Set layout height to wrap content but enforce a minimum height of 60dp
         val params = view.layoutParams
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT // Allow height to grow with content
+        if (params.height < TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, context.resources.displayMetrics).toInt()) {
+            params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, context.resources.displayMetrics).toInt()
+        }
         view.layoutParams = params
+
 
         // Enable text wrapping
         view.maxLines = Integer.MAX_VALUE // Allow as many lines as needed

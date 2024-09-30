@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.util.Log
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
@@ -134,7 +135,7 @@ class TaskListAdapter(
 
         }
 
-        @SuppressLint("SetTextI18n")
+        @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
 
         fun bind(taskWithSubTasks: TaskWithSubTasks, position: Int) {
             try {
@@ -196,6 +197,18 @@ class TaskListAdapter(
                     // Set the checked state based on the completion status of each subtask
                     for ((index, subTask) in subTaskList.withIndex()) {
                         binding.listViewSubtasks.setItemChecked(index, subTask.isCompleted)
+                    }
+
+                    // Set the touch listener to allow the ListView to handle touch events
+                    binding.listViewSubtasks.setOnTouchListener { _, event ->
+                        binding.root.parent.requestDisallowInterceptTouchEvent(true)
+                        // Handle touch events
+                        if (event.action == MotionEvent.ACTION_UP) {
+                            // Call performClick() to ensure accessibility services can respond to the click
+                            binding.listViewSubtasks.performClick()
+                        }
+
+                        binding.listViewSubtasks.onTouchEvent(event)
                     }
 
                     binding.listViewSubtasks.setOnItemClickListener { _, _, subTaskPosition, _ ->
