@@ -659,6 +659,7 @@ class TaskFragment : Fragment(), FontSizeAware {
             for (tag in tags) {
                 val chip = Chip(requireContext()).apply {
                     text = tag
+                    textSize = fontSize
                     isCloseIconVisible = true
                     setOnCloseIconClickListener {
                         viewModel.removeTag(tag)
