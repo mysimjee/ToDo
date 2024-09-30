@@ -173,13 +173,8 @@ class TaskListAdapter(
 
                 binding.btnExpandCollapse.setOnClickListener {
                     if (isExpanded) {
-                        // Enable scrolling when expanded
-                        (binding.root.parent as? RecyclerView)?.isNestedScrollingEnabled = true
-
                         expandedPositionSet.remove(position)
                     } else {
-                        // Disable scrolling when expanded
-                        (binding.root.parent as? RecyclerView)?.isNestedScrollingEnabled = false
                         expandedPositionSet.add(position)
                     }
                     notifyItemChanged(position)
